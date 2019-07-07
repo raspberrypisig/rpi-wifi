@@ -158,6 +158,7 @@ EOF
 
 # Populate `/bin/start_wifi.sh`
 sudo bash -c 'cat > /bin/rpi-wifi.sh' << EOF
+#!/usr/bin/env bash
 echo 'Starting Wifi AP and client...'
 sleep 30
 
