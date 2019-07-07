@@ -160,6 +160,12 @@ EOF
 sudo bash -c 'cat > /bin/rpi-wifi.sh' << EOF
 echo 'Starting Wifi AP and client...'
 sleep 30
+
+if [ -f /var/run/hostapd/ap0 ];
+then
+  rm -f /var/run/hostapd/ap0
+fi
+
 sudo ifdown --force wlan0
 sudo ifdown --force ap0
 sudo ifup ap0
