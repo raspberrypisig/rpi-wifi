@@ -7,15 +7,13 @@
 # Error management
 set -o errexit
 set -o pipefail
-set -o nounset
+#set -o nounset
 
 usage() {
     cat 1>&2 <<EOF
 Configures simultaneous AP and Managed Mode Wifi on Raspberry Pi
 
-USAGE:
-    rpi-wifi -a <ap_ssid> [<ap_password>] -c <client_password> [<client_password>]
-    
+USAGE:   
     rpi-wifi -a MyAP myappass -c MyWifiSSID mywifipass
 
 PARAMETERS:
