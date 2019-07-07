@@ -170,6 +170,9 @@ $([ "$NO_INTERNET" != "true" ] && echo "sudo systemctl restart dnsmasq")
 EOF
 sudo chmod +x /bin/rpi-wifi.sh
 
+sudo systemctl unmask hostapd
+sudo systemctl enable hostapd
+
 # Configure cron job
 # sudo bash -c 'cat > /etc/systemd/system/rpi-wifi.service' << EOF
 # [Unit]
@@ -186,7 +189,9 @@ sudo chmod +x /bin/rpi-wifi.sh
 # EOF
 # sudo systemctl daemon-reload
 # sudo systemctl enable rpi-wifi.service
-crontab -l | { cat; echo "@reboot /bin/rpi-wifi.sh"; } | crontab -
+
+#crontab -l | { cat; echo "@reboot /bin/rpi-wifi.sh"; } | crontab -
+(crontab -l 2>/dev/null; echo "@reboot /bin/rpi-wifi.sh") | crontab -
 
 # Finish
 echo "Wifi configuration is finished! Please reboot your Raspberry Pi to apply changes..."
