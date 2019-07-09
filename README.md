@@ -24,7 +24,7 @@ Replace:
 Running the script above will do all the legwork to setup Raspberry Pi as both AP and normal client(managed mode) using the onboard
 WIFI chip of the Raspberry Pi 3. It will reboot automatically when done.
 
-When your pi boots again, wait 30 seconds or so and then run
+When your pi boots again, wait about a minute, then shutoff. Power again, wait 30 seconds, then run
 
 ```sh
 dmesg
