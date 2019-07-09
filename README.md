@@ -42,7 +42,9 @@ Now your AP is ready.
 
 ### Wifi channel
 
-In Australia, try 1,6,11 in /etc/hostapd/hostapd.conf
+In dmesg, if you see a lot of errors from the brcmfmac driver, trying using another WIFI channel in /etc/hostapd/hostapd.conf
+
+In Australia, try one of 1,6 or 11
 
 
 
