@@ -33,7 +33,7 @@ dmesg
 You should see the following line:
 
 ```text
-
+[RPI AP] Simultaneous WIFI AP Mode started.
 ```
 
 Now your AP is ready.
