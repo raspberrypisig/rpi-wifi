@@ -22,7 +22,6 @@ PARAMETERS:
     -i, --ip            AP IP
 
 FLAGS:
-    -n, --no-internet   Disable IP forwarding
     -h, --help          Show this help
 EOF
     exit 0
@@ -55,10 +54,6 @@ case $key in
     ;;
     -h|--help)
     usage
-    shift
-	;;
-    -n|--no-internet)
-    NO_INTERNET="true"
     shift
     ;;
     *)
@@ -159,22 +154,23 @@ EOF
 # Populate `/bin/start_wifi.sh`
 sudo bash -c 'cat > /bin/rpi-wifi.sh' << EOF
 #!/usr/bin/env bash
-echo 'Starting Wifi AP and client...'
-sleep 30
-
-if [ -f /var/run/hostapd/ap0 ];
-then
-  rm -f /var/run/hostapd/ap0
-fi
-
-sudo ifdown --force wlan0
+sudo systemctl stop wpa_supplicant 
+sudo pkill wpa_supplicant
 sudo ifdown --force ap0
 sudo ifup ap0
-sudo ifup wlan0
-$([ "$NO_INTERNET" != "true" ] && echo "sudo sysctl -w net.ipv4.ip_forward=1")
-$([ "$NO_INTERNET" != "true" ] && echo "sudo iptables -t nat -A POSTROUTING -s ${AP_IP_BEGIN}.0/24 ! -d ${AP_IP_BEGIN}.0/24 -j MASQUERADE")
-$([ "$NO_INTERNET" != "true" ] && echo "sudo systemctl restart dnsmasq")
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo systemctl restart dnsmasq
+sudo rm -f /var/run/hostapd/ap0 2>/dev/null
+sudo hostapd -d -B -P /run/hostapd.ap0.pid /etc/hostapd/hostapd.conf
+sudo rm -f /var/run/hostapd/ap0 2>/dev/null
+sudo hostapd -d -B -P /run/hostapd.ap0.pid /etc/hostapd/hostapd.conf
+sudo wpa_supplicant -B -D nl80211,wext -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf
+sleep 5
+sudo dhclient -v wlan0
+sudo iptables -t nat -A POSTROUTING -s ${AP_IP_BEGIN}.0/24 ! -d ${AP_IP_BEGIN}.0/24 -j MASQUERADE
+sudo bash -c ' echo [RPI AP] Simultaneous WIFI AP Mode started. > /dev/kmsg'
 EOF
+
 sudo chmod +x /bin/rpi-wifi.sh
 
 sudo systemctl unmask hostapd
