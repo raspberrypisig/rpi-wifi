@@ -38,3 +38,11 @@ You should see the following line:
 
 Now your AP is ready.
 
+# Troubleshooting
+
+### Wifi channel
+
+In Australia, try 1,6,11 in /etc/hostapd/hostapd.conf
+
+
+
