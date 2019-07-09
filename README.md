@@ -4,7 +4,19 @@
 
 
 ## Usage
-```
-curl https://raw.githubusercontent.com/lukicdarkoo/rpi-wifi/master/configure | bash -s -- -a MyAP myappass -c WifiSSID wifipass
 
+Run as normal user
+
+```sh
+git clone https://github.com/raspberrypisig/rpi-wifi
+cd rpi-wifi
+./rpi-wifi
+./rpi-wifi -a <AP_SSID> <AP_password> -c <WIFI_SSID> <WIFI_password>
 ```
+
+Replace:
+
+* AP_SSID : The SSID of your AP (eg. RPIAP)
+* AP_password: AP password
+* WIFI_SSID : The normal wifi that you connect with on your pi
+* WIFI_password: The password for the wifi
