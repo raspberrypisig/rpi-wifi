@@ -20,3 +20,21 @@ Replace:
 * AP_password: AP password
 * WIFI_SSID : The normal wifi that you connect with on your pi
 * WIFI_password: The password for the wifi
+
+Running the script above will do all the legwork to setup Raspberry Pi as both AP and normal client(managed mode) using the onboard
+WIFI chip of the Raspberry Pi 3. It will reboot automatically when done.
+
+When your pi boots again, wait 30 seconds or so and then run
+
+```sh
+dmesg
+```
+
+You should see the following line:
+
+```text
+
+```
+
+Now your AP is ready.
+
