@@ -46,5 +46,18 @@ In dmesg, if you see a lot of errors from the brcmfmac driver, trying using anot
 
 In Australia, try one of 1,6 or 11
 
+### dhclient remembering old leases
+https://askubuntu.com/questions/151958/how-to-make-dhclient-forget-its-last-dhcp-lease
+
+### VNC error
+
+Missing or corrupted keys
+
+```sh
+sudo vncserver-x11 -generatekeys force
+sudo Xvnc -generatekeys force
+sudo systemct1 restart vncserver-x11-serviced.service 
+```
+
 
 
