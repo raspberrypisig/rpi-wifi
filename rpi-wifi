@@ -130,6 +130,8 @@ network={
 }
 EOF
 
+sudo cp /etc/network/interfaces /etc/network/interfaces_original
+
 # Populate `/etc/network/interfaces`
 sudo bash -c 'cat > /etc/network/interfaces' << EOF
 source-directory /etc/network/interfaces.d
