@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Icon=/home/pi/rpi-wifi/wifi.png
+Name=gui
+Comment=rpiwifi
+TryExec=/home/pi/rpi-wifi/rpiwifigui
+Exec=/home/pi/rpi-wifi/rpiwifigui %f
+Terminal=false
+StartupNotify=true
+Categories=Applications
