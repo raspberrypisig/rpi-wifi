@@ -5,6 +5,11 @@
 
 import PySimpleGUI as gui
 from enum import Enum
+import queue
+from threading import Thread
+import subprocess
+
+q = queue.Queue()
 
 class Windows(Enum):
   FIRSTWINDOW=1
@@ -33,6 +38,29 @@ resetWindowLayout = [
 GUIWindow = gui.Window('RPI Wifi').layout(firstLayout)
 currentWindow = Windows.FIRSTWINDOW
 
+class CreateAPCommand:
+  def __init__(self, ap_ssid, ap_password, wifi_ssid, wifi_password):
+    self.ap_ssid = ap_ssid
+    self.ap_password = ap_password
+    self.wifi_ssid = wifi_ssid
+    self.wifi_password = wifi_password
+
+  def execute(self):
+    command = f'./rpi-wifi -a {self.ap_ssid} {self.ap_password} -c {self.wifi_ssid} {self.wifi_password}'   
+    subprocess.Popen(["lxterminal", "-e", command])
+
+class ShellScriptExecutor(Thread):
+  def run(self):
+    while True:
+      item = q.get()
+      item.execute()
+      q.task_done()
+      
+
+t=ShellScriptExecutor()
+t.setDaemon(True)
+t.start()
+
 while True:
   ev1, vals1 = GUIWindow.Read()
   
@@ -51,6 +79,10 @@ while True:
         MainWindow.Close()
         GUIWindow.UnHide()
         break
+      if ev2 == 'Enter AP Mode':
+        ap_ssid, ap_password, wifi_ssid, wifi_password = tuple(vals2.values())
+        apCommand = CreateAPCommand(ap_ssid, ap_password, wifi_ssid, wifi_password)
+        q.put(apCommand)
 
   if currentWindow == Windows.FIRSTWINDOW and ev1 == 'Normal Mode':
     GUIWindow.Hide()
