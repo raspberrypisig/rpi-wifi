@@ -49,6 +49,11 @@ class CreateAPCommand:
     command = f'./rpi-wifi -a {self.ap_ssid} {self.ap_password} -c {self.wifi_ssid} {self.wifi_password}'   
     subprocess.Popen(["lxterminal", "-e", command])
 
+class ResetCommand:
+  def execute(self):
+    subprocess.Popen(["lxterminal", "-e", "./reset.sh"])
+
+
 class ShellScriptExecutor(Thread):
   def run(self):
     while True:
@@ -84,6 +89,7 @@ while True:
         apCommand = CreateAPCommand(ap_ssid, ap_password, wifi_ssid, wifi_password)
         q.put(apCommand)
 
+
   if currentWindow == Windows.FIRSTWINDOW and ev1 == 'Normal Mode':
     GUIWindow.Hide()
     currentWindow = Windows.RESETWINDOW
@@ -95,6 +101,9 @@ while True:
         MainWindow.Close()
         GUIWindow.UnHide()
         break
+
+      if ev2 == 'Yes':
+        q.put(ResetCommand())
 
         
 
