@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Icon=/usr/share/pixmaps/wifi.png
+Name=gui
+Comment=rpiwifi
+TryExec=/usr/local/bin/rpiwifigui
+Exec=/usr/local/bin/rpiwifigui %f
+Terminal=false
+StartupNotify=true
+Categories=Applications

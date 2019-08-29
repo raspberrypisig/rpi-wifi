@@ -46,12 +46,12 @@ class CreateAPCommand:
     self.wifi_password = wifi_password
 
   def execute(self):
-    command = f'./rpi-wifi -a {self.ap_ssid} {self.ap_password} -c {self.wifi_ssid} {self.wifi_password}'   
+    command = f'rpi-wifi -a {self.ap_ssid} {self.ap_password} -c {self.wifi_ssid} {self.wifi_password}'   
     subprocess.Popen(["lxterminal", "-e", command])
 
 class ResetCommand:
   def execute(self):
-    subprocess.Popen(["lxterminal", "-e", "./rpi-wifi-reset"])
+    subprocess.Popen(["lxterminal", "-e", "rpi-wifi-reset"])
 
 
 class ShellScriptExecutor(Thread):
